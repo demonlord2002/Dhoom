@@ -9,4 +9,4 @@ MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017/")
 DB_NAME = "telegram_files"
 COLLECTION_NAME = "files"
 
-DOMAIN = os.environ.get("DOMAIN", "vignesh-v2.netlify.app")
+DOMAIN = os.environ.get("DOMAIN", "https://vignesh-v2-e03862856b16.herokuapp.com")
