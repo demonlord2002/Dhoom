@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from bot.config import API_ID, API_HASH, BOT_TOKEN, BIN_CHANNEL, MONGO_URI, DB_NAME, COLLECTION_NAME, DOMAIN
+from config import API_ID, API_HASH, BOT_TOKEN, BIN_CHANNEL, MONGO_URI, DB_NAME, COLLECTION_NAME
 from pymongo import MongoClient
 import uuid
 
