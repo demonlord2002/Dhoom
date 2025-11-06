@@ -1,33 +1,26 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import RedirectResponse
 from pymongo import MongoClient
-from pyrogram import Client
-from config import API_ID, API_HASH, BOT_TOKEN, MONGO_URI, DB_NAME, COLLECTION_NAME, DOMAIN, BIN_CHANNEL
-
+from config import MONGO_URI, DB_NAME, COLLECTION_NAME, BIN_CHANNEL
 
 app = FastAPI()
 
-# MongoDB
+# MongoDB setup
 mongo = MongoClient(MONGO_URI)
 db = mongo[DB_NAME]
 collection = db[COLLECTION_NAME]
 
-# Pyrogram Client
-client = Client("direct_link_web", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+@app.get("/")
+async def home():
+    return {"status": "online", "message": "File to Link bot API is working!"}
 
 @app.get("/file/{token}")
 async def get_file(token: str):
-    file_record = collection.find_one({"token": token})
-    if not file_record:
+    file_data = collection.find_one({"token": token})
+    if not file_data:
         raise HTTPException(status_code=404, detail="File not found")
 
-    file_id = file_record["file_id"]
-
-    # Download file as stream
-    async with client:
-        stream = await client.download_media(file_id, in_memory=True)
-        return StreamingResponse(
-            stream,
-            media_type=file_record.get("mime_type", "application/octet-stream"),
-            headers={"Content-Disposition": f'attachment; filename="{file_record["file_name"]}"'}
-        )
+    # Telegram file redirect
+    tg_link = f"https://t.me/c/{str(BIN_CHANNEL)[4:]}/{file_data['file_id']}"
+    return RedirectResponse(url=tg_link)
+    
