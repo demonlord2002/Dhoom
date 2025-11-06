@@ -2,7 +2,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pymongo import MongoClient
 from pyrogram import Client
-from web.config import API_ID, API_HASH, BOT_TOKEN, MONGO_URI, DB_NAME, COLLECTION_NAME
+from config import API_ID, API_HASH, BOT_TOKEN, MONGO_URI, DB_NAME, COLLECTION_NAME, DOMAIN, BIN_CHANNEL
+
 
 app = FastAPI()
 
