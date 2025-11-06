@@ -57,6 +57,7 @@ async def handle_upload(client, message):
         "file_id": file_id,
         "file_name": file_name,
         "mime_type": mime_type
+        "message_id": fwd.id
     })
 
     # ✅ Generate correct permanent link (no double https)
